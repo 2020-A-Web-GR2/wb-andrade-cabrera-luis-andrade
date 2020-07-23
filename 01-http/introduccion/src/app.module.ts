@@ -3,11 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HttpJuegoModule } from './http/http-juego.module';
 import {HttpCalculadoraModule} from "./http-calculadora/http-calculadora.module";
+import {UsuarioModule} from "./usuario/usuario.module";
 
 @Module({
   imports: [
       // Aquí otros módulos
-    HttpJuegoModule,HttpCalculadoraModule
+    HttpJuegoModule,HttpCalculadoraModule,UsuarioModule
   ],
   controllers: [
       // Controladores APP MODULE
