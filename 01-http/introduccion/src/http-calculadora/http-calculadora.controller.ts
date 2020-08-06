@@ -11,8 +11,6 @@ import {
     Post,
     Param, Req, Res
 } from "@nestjs/common";
-import {HttpErrorByCode} from "@nestjs/common/utils/http-error-by-code.util";
-import {MascotaCreateDto} from "../http/dto/mascota.create-dto";
 import {usuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
 
@@ -28,24 +26,17 @@ export class HttpCalculadoraController{
         if (req.cookies.nombre){
             console.log("parametrosDeconsulta", parametrosDeConsulta)
             const secondArgumenbtExists = parametrosDeConsulta.n2
-            const argumentosValidos = isNaN(parametrosDeConsulta.n1)
-            if (argumentosValidos && !secondArgumenbtExists){
-                throw new BadRequestException('No son números')
+            const argumentosValidos = isNaN(parametrosDeConsulta.n1) || isNaN(parametrosDeConsulta.n2)
+            if (argumentosValidos){
+                throw new BadRequestException('n1 y n2 deben ser números')
             } else{
                 const n1 = Number(parametrosDeConsulta.n1);
                 const n2 = Number(parametrosDeConsulta.n2);
                 const resultado = n1 + n2
                 const puntaje = req.signedCookies.puntaje - Math.abs(resultado)
+                const usuario = req.cookies.nombre.toString()
                 console.log(puntaje)
-                if(puntaje <= 0){
-                    this.reiniciarPuntaje(resultado,req.cookies.nombre.toString(), res)
-                } else{
-                    res.cookie('puntaje',puntaje,{signed:true});
-                    const mensaje = {
-                        mensaje: resultado
-                    }
-                    res.send(mensaje);
-                }
+                this.enviarRespuesta(n1, n2, "+",resultado, puntaje, usuario, res)
             }
         }
         else{
@@ -66,23 +57,17 @@ export class HttpCalculadoraController{
             console.log("Primer Argumento", primerArgumento)
             console.log("Segundo Argumento", segundoArgumento)
             const secondArgumenbtExists = segundoArgumento.n2
-            const argumentosValidos = isNaN(primerArgumento.n1)
-            if (argumentosValidos && !secondArgumenbtExists){
-                throw new BadRequestException('No son números')
+            const argumentosValidos = isNaN(primerArgumento.n1) || isNaN(segundoArgumento.n2)
+            if (argumentosValidos){
+                throw new BadRequestException('n1 y n2 deben ser números')
             } else{
                 const n1 = Number(primerArgumento.n1);
                 const n2 = Number(segundoArgumento.n2);
                 const resultado = n1 - n2
                 const puntaje = req.signedCookies.puntaje - Math.abs(resultado)
-                if(puntaje <= 0){
-                    this.reiniciarPuntaje(resultado,req.cookies.nombre.toString(), res)
-                } else{
-                    res.cookie('puntaje',puntaje,{signed:true});
-                    const mensaje = {
-                        mensaje: resultado
-                    }
-                    res.send(mensaje);
-                }
+                const usuario = req.cookies.nombre.toString()
+                console.log(puntaje)
+                this.enviarRespuesta(n1, n2, "-",resultado, puntaje, usuario, res)
             }
         }
         else{
@@ -104,23 +89,17 @@ export class HttpCalculadoraController{
             console.log("Primer Argumento", primerArgumento)
             console.log("Segundo Argumento", segundoArgumento)
             const secondArgumenbtExists = segundoArgumento.n2
-            const argumentosValidos = isNaN(primerArgumento.n1)
-            if (argumentosValidos && !secondArgumenbtExists){
-                throw new BadRequestException('No son números')
+            const argumentosValidos = isNaN(primerArgumento.n1) || isNaN(segundoArgumento.n2)
+            if (argumentosValidos){
+                throw new BadRequestException('n1 y n2 deben ser números')
             } else{
                 const n1 = Number(primerArgumento.n1);
                 const n2 = Number(segundoArgumento.n2);
                 const resultado = n1 * n2
                 const puntaje = req.signedCookies.puntaje - Math.abs(resultado)
-                if(puntaje <= 0){
-                    this.reiniciarPuntaje(resultado,req.cookies.nombre.toString(), res)
-                } else{
-                    res.cookie('puntaje',puntaje,{signed:true});
-                    const mensaje = {
-                        mensaje: resultado
-                    }
-                    res.send(mensaje);
-                }
+                const usuario = req.cookies.nombre.toString()
+                console.log(puntaje)
+                this.enviarRespuesta(n1, n2, "*",resultado, puntaje, usuario, res)
             }
         }
         else{
@@ -140,9 +119,9 @@ export class HttpCalculadoraController{
             console.log("ParametrosRuta", parametrosRuta)
             //console.log("Segundo Argumento", segundoArgumento)
             const secondArgumentExists = parametrosRuta.n2
-            const argumentosValidos = isNaN(parametrosRuta.n1)
-            if (argumentosValidos && !secondArgumentExists){
-                throw new BadRequestException('No son números')
+            const argumentosValidos = isNaN(parametrosRuta.n1) || isNaN(parametrosRuta.n2)
+            if (argumentosValidos){
+                throw new BadRequestException('n1 y n2 deben ser números')
             } else{
                 const n1 = Number(parametrosRuta.n1);
                 const n2 = Number(parametrosRuta.n2);
@@ -151,15 +130,9 @@ export class HttpCalculadoraController{
                 } else{
                     const resultado = n1 / n2
                     const puntaje = req.signedCookies.puntaje - Math.abs(resultado)
-                    if(puntaje <= 0){
-                        this.reiniciarPuntaje(resultado,req.cookies.nombre.toString(), res)
-                    } else{
-                        res.cookie('puntaje',puntaje,{signed:true});
-                        const mensaje = {
-                            mensaje: resultado
-                        }
-                        res.send(mensaje);
-                    }
+                    const usuario = req.cookies.nombre.toString()
+                    console.log(puntaje)
+                    this.enviarRespuesta(n1, n2, "/",resultado, puntaje, usuario, res)
                 }
             }
         }
@@ -190,7 +163,8 @@ export class HttpCalculadoraController{
                     },
                 )
                 res.send({
-                    mensaje: "Usuario "+ parametrosDeConsulta.nombre +" Guardado"
+                    mensaje: "Usuario "+ parametrosDeConsulta.nombre +" Guardado",
+                    puntaje: "Su puntaje empezará en 100"
                 })
             }
         } catch (e) {
@@ -198,17 +172,20 @@ export class HttpCalculadoraController{
             throw new BadRequestException("Nombre no válido")
         }
     }
-    reiniciarPuntaje(resultado,usuario,res){
-        res.cookie(
-            "puntaje",
-            100,
-            {
-                signed: true
-            },
-        )
-        res.send({
-            resultado:resultado,
-            mensaje: usuario +", haz terminado tus puntos, se te han restablecido de nuevo"
-        })
+    enviarRespuesta(n1, n2, operador, resultado, puntaje,usuario, res){
+        if(puntaje<=0){
+            res.cookie("puntaje",100,{signed: true},
+            )
+            res.send({
+                resultado: n1.toString() + " " + operador + " " + n2.toString() + "= " + resultado.toString(),
+                mensaje: usuario +", haz terminado tus puntos, se te han restablecido de nuevo"
+            })
+        }else{
+            res.cookie('puntaje',puntaje,{signed:true});
+            res.send({
+                resultado: n1.toString() + " " + operador + " " + n2.toString() + " = " + resultado.toString(),
+                mensaje: "Su puntaje es: " + puntaje.toString()
+            })
+        }
     }
 }
