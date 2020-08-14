@@ -21,4 +21,10 @@ export class UsuarioService {
     buscarUno(id: number){
         return this.repositorio.findOne(id) //Promesa
     }
+    editarUno(usuarioEditado: UsuarioEntity){
+        return this.repositorio.save(usuarioEditado); // La documentación recomienda utlizar este método
+    }
+    eliminarUno(id: number){
+        return this.repositorio.delete(id);
+    }
 }
