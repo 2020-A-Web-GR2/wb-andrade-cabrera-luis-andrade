@@ -16,9 +16,11 @@ import {UsuarioEntity} from "./usuario/usuario.entity";
           name:'default', // Nombre de conexión
           type: 'mysql', //Mysql o postgress
           host: 'localhost', //ip
+          //host: '34.68.28.243',
           port: 3306, //puerto
           username: 'root', //usuario
           password: 'kakaroto', // password
+          //password: 'test',
           database: 'test', // Base de datos
           entities: [// TODAS LAS ENTIDADEs
             UsuarioEntity
