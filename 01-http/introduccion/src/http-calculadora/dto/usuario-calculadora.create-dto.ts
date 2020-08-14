@@ -10,7 +10,7 @@ import {
     MinLength
 } from "class-validator";
 
-export class usuarioCreateDto{
+export class usuarioCalculadoraCreateDto{
 
     @IsNotEmpty()
     @IsAlpha()

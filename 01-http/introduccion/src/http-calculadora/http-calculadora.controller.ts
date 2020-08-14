@@ -11,7 +11,7 @@ import {
     Post,
     Param, Req, Res
 } from "@nestjs/common";
-import {usuarioCreateDto} from "./dto/usuario.create-dto";
+import {usuarioCalculadoraCreateDto} from "./dto/usuario-calculadora.create-dto";
 import {validate, ValidationError} from "class-validator";
 
 @Controller('calculadora')
@@ -147,7 +147,7 @@ export class HttpCalculadoraController{
         @Res() res
     ) {
         console.log("parametrosDeconsulta", parametrosDeConsulta)
-        const usuarioValidado = new usuarioCreateDto();
+        const usuarioValidado = new usuarioCalculadoraCreateDto();
         usuarioValidado.nombre = parametrosDeConsulta.nombre;
         try {
             const errores: ValidationError[] = await validate(usuarioValidado);
