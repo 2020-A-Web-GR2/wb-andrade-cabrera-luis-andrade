@@ -192,10 +192,34 @@ export class UsuarioController {
     ){
         const nombreControlador = 'Andres';
         res.render(
-            'ejemplo', // Nombre de la vista(archivo)
+            'usuario/ejemplo', // Nombre de la vista(archivo)
             {//Parametros de la vista
                 nombre: nombreControlador,
             }
         )
+    }
+
+    // npm install ejs
+    @Get('vista/FAQ')
+    vistaFAQ(
+        @Res() res
+    ){
+        res.render('usuario/faq')
+    }
+
+    // npm install ejs
+    @Get('vista/inicio')
+    vistaInicio(
+        @Res() res
+    ){
+        res.render('usuario/inicio')
+    }
+
+    // npm install ejs
+    @Get('vista/login')
+    vistaLogin(
+        @Res() res
+    ){
+        res.render('usuario/login')
     }
 }
