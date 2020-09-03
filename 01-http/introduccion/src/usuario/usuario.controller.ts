@@ -209,10 +209,24 @@ export class UsuarioController {
 
     // npm install ejs
     @Get('vista/inicio')
-    vistaInicio(
+    async vistaInicio(
         @Res() res
-    ){
-        res.render('usuario/inicio')
+    ) {
+        let resultadoEncontrado
+        try {
+            resultadoEncontrado = await this._usuarioService.buscarTodos();
+        } catch (error) {
+            throw new InternalServerErrorException("Error encontrando usuarios")
+        }
+        if(resultadoEncontrado){
+            res.render(
+                'usuario/inicio',
+                {
+                    arregloUsuarios: resultadoEncontrado
+                });
+        }else{
+            throw new NotFoundException("No se encontraron usuarios")
+        }
     }
 
     // npm install ejs
@@ -221,5 +235,13 @@ export class UsuarioController {
         @Res() res
     ){
         res.render('usuario/login')
+    }
+
+    // npm install ejs
+    @Get('vista/crear')
+    vistaCrear(
+        @Res() res
+    ){
+        res.render('usuario/crear')
     }
 }
