@@ -32,8 +32,9 @@
         <th>Cedula</th>
         <th>Acciones</th>
     </tr>
+    <% arregloUsuarios.forEach((objeto) => {%>
     <tr>
-        <% arregloUsuarios.forEach((objeto) => {%>
+
             <!--Table detail-->
             <td><%= objeto.nombre%></td>
             <td><%= objeto.apellido%></td>
@@ -41,11 +42,16 @@
             <td>
                 <button>Ver</button>
                 <button>Editar</button>
-                <button>Eliminar</button>
+                <form action="/usuario/eliminarDesdeVista/<%= objeto.id%>"
+                      method="post">
+                    <button type="submit">Eliminar</button>
+                </form>
+
             </td>
-        <%})%>
+
 
     </tr>
+    <%})%>
 </table>
 
 <%- include('../compartido/funcionalidad-general/funcionalidad-general-component') %>
