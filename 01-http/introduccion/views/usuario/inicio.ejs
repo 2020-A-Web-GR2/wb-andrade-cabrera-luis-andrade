@@ -2,29 +2,32 @@
 <%- include('../compartido/menu/menu-component') %>
 <!-- usuario/inicio.ejs-->
 <!--"="-->
-<p><%= "Hola"%></p>
-<p><%= 15%></p>
+<!--<p><%= "Hola"%></p>-->
+<!--<p><%= 15%></p>-->
 
-<!-- "<% %> "-->
-<% const andres = {nombre: "Andres", apellido: "Andrade", cedula: "0123456789"}%>
-<% const numero = 25%>
-<% const mensaje = "Hola"%>
+<!--&lt;!&ndash; "<% %> "&ndash;&gt;-->
+<!--<% const andres = {nombre: "Andres", apellido: "Andrade", cedula: "0123456789"}%>-->
+<!--<% const numero = 25%>-->
+<!--<% const mensaje = "Hola"%>-->
 
-<p><%= andres.nombre%></p>
-<p><%= numero%></p>
-<p><%= mensaje%></p>
+<!--<p><%= andres.nombre%></p>-->
+<!--<p><%= numero%></p>-->
+<!--<p><%= mensaje%></p>-->
 
-<% const arregloNumeros = [1,2,3,4,5] %>
-<ul>
-    <% arregloNumeros.forEach((objeto) => {%>
-        <li><%= objeto%></li>
-    <%})%>
-</ul>
+<!--<% const arregloNumeros = [1,2,3,4,5] %>-->
+<!--<ul>-->
+<!--    <% arregloNumeros.forEach((objeto) => {%>-->
+<!--        <li><%= objeto%></li>-->
+<!--    <%})%>-->
+<!--</ul>-->
 
 <a href="/usuario/vista/crear">
     <button>Crear</button>
 </a>
 
+<% if(typeof parametrosConsulta.mensaje !== "undefined"){ %>
+    <p>MENSAJE: <%= parametrosConsulta.mensaje%></p>
+<%}%>
 <table>
     <tr>
         <th>Nombre</th>
@@ -41,9 +44,11 @@
             <td><%= objeto.cedula%></td>
             <td>
                 <button>Ver</button>
-                <button>Editar</button>
+                <a href="/usuario/vista/editar/<%= objeto.id%>">
+                    <button>Editar</button>
+                </a>
                 <form action="/usuario/eliminarDesdeVista/<%= objeto.id%>"
-                      method="post">
+                      method="POST">
                     <button type="submit">Eliminar</button>
                 </form>
 
