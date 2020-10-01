@@ -215,8 +215,13 @@ export class UsuarioController {
         @Query() parametrosConsulta
     ) {
         let resultadoEncontrado
+        let busqueda = ""
+        const existeBusqueda = typeof parametrosConsulta.busqueda!="undefined";
+        if (existeBusqueda){
+            busqueda = parametrosConsulta.busqueda
+        }
         try {
-            resultadoEncontrado = await this._usuarioService.buscarTodos(parametrosConsulta.busqueda);
+            resultadoEncontrado = await this._usuarioService.buscarTodos(busqueda);
         } catch (error) {
             throw new InternalServerErrorException("Error encontrando usuarios")
         }

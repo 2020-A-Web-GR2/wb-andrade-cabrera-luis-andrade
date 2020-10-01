@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/home">Mi Cancha GOL</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link<%= active["inicio"] ? " active":""%>" href="/home">Inicio <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link<%= active["reservacion"] ? " active":""%>" href="/reservaciones">Reservaciones</a>
+            <a class="nav-item nav-link<%= active["cliente"] ? " active":""%>" href="/usuarios/clientes">Clientes</a>
+            <a class="nav-item nav-link<%= active["usuario"] ? " active":""%>" href="/usuarios">Usuarios</a>
+            <a class="nav-item nav-link<%= active["rol"] ? " active":""%>" href="/roles">Roles</a>
+            <a class="nav-item nav-link<%= active["cancha"] ? " active":""%>" href="/canchas">Canchas</a>
+            <a class="nav-item nav-link<%= active["equipo"] ? " active":""%>" href="/equipos">Equipos</a>
+        </div>
+    </div>
+</nav>
