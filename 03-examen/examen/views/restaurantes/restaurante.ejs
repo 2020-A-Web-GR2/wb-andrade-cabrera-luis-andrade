@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <title>Roles</title>
+    <title>Restaurante</title>
 
     <style>
 
@@ -11,6 +11,93 @@
 
 </head>
 <body>
+
+<% const existeError = typeof parametrosConsulta.error != "undefined" %>
+<% const existeMensaje = typeof parametrosConsulta.mensaje != "undefined" %>
+
+<% const activeDict = {
+    "inicio": true,
+    "crear": false
+} %>
+<%- include("../compartido/nav-bar/nav-bar-component.ejs",{active:activeDict}) %>
+
+<div class="container">
+    <h1>Restaurantes</h1>
+    <% if (existeError){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= parametrosConsulta.error %>
+        </div>
+    <% } %>
+    <% if(existeMensaje) { %>
+        <div class="alert alert-success" role="alert">
+            <%= parametrosConsulta.mensaje %>
+        </div>
+    <% } %>
+    <form action="/restaurante/inicio"
+        method="get">
+        <div class="input-group mb-3">
+            <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar por nombre o categoria"
+                    aria-label="Example text with button addon"
+                    aria-describedby="button-addon1"
+                    name="busqueda"
+                    id="busqueda">
+            <div class="input-group-prepend">
+                <button class="btn btn-secondary" type="submit" id="busqueda">Buscar</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+
+        <div class="col-lg-2">
+            <a href="/restaurante/crear">
+                <button type="submit" class="btn btn-secondary">Nuevo Restaurante</button>
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">RUC</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Tipo de Comida</th>
+                <th scope="col">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% let counter = 1 %>
+            <% arregloRestaurantes.forEach((restauranteObjeto) => { %>
+                <tr>
+                    <th scope="row"><%= counter %></th>
+                    <td><%= restauranteObjeto.nombre %></td>
+                    <td><%= restauranteObjeto.ruc %></td>
+                    <td><%= restauranteObjeto.categoria %></td>
+                    <td><%= restauranteObjeto.ubicacion %></td>
+                    <td><%= restauranteObjeto.telefono %></td>
+                    <td><%= restauranteObjeto.tipoComida %></td>
+                    <td>
+                        <a href="/restaurante/editar/<%= restauranteObjeto.id %>">
+                            <button type="submit" class="btn btn-secondary">Editar</button>
+                        </a>
+                        <form action="/restaurante/eliminarDesdeVista/<%= restauranteObjeto.id %>"
+                              method="post">
+                            <button type="submit" class="btn btn-secondary">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <% counter += 1 %>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <%- include("../compartido/funcionalidad-general/funcionalidad-general-component.ejs") %>
 </body>

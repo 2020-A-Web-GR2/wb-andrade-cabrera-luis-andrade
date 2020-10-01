@@ -18,13 +18,14 @@ export class RestauranteService {
         const consulta: FindManyOptions<RestauranteEntity> = {
             where: [
                 {
-                    nombre: Like(`%${textoDeConsulta}`)
+                    tipoComida: Like(`%${textoDeConsulta}`)
                 },
                 {
                     categoria: Like(`%${textoDeConsulta}`)
                 }
             ]
         }
+        return this.repositorio.find(consulta) //Promesa
     }
 
     buscarUno(id: number){

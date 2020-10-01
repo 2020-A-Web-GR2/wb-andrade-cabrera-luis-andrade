@@ -1,0 +1,54 @@
+
+> examen@0.0.1 start:dev /home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen
+> nest start --watch
+
+c[[90m9:20:09 PM[0m] Starting compilation in watch mode...
+
+[[90m9:20:12 PM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +53ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +33ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[InstanceLoader] [39m[32mRestauranteModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RoutesResolver] [39m[32mAppController {}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RoutesResolver] [39m[32mRestauranteController {/restaurante}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/inicio, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/crear, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/crearDesdeVista, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/editar/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/editarDesdeVista/:id, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurante/eliminarDesdeVista/:id, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 119245   - [39m09/30/2020, 9:20:12 PM   [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
+[31m[Nest] 119245   - [39m09/30/2020, 9:20:15 PM   [38;5;3m[ExceptionsHandler] [39m[31m/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/views/restaurantes/crear-restaurante.ejs:129
+    127|                         id="inputRestauranteRUC"
+    128|                         name="ruc"
+ >> 129|                         value="<%= existeTipoComida ? TipoComida: "" %>">
+    130|             </div>
+    131|         </div>
+    132|         <button type="submit" class="btn btn-secondary"><%= existeRestaurante ? "Guardar": "Crear"%></button>
+
+TipoComida is not defined[39m[38;5;3m +2910ms[39m
+ReferenceError: /home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/views/restaurantes/crear-restaurante.ejs:129
+    127|                         id="inputRestauranteRUC"
+    128|                         name="ruc"
+ >> 129|                         value="<%= existeTipoComida ? TipoComida: "" %>">
+    130|             </div>
+    131|         </div>
+    132|         <button type="submit" class="btn btn-secondary"><%= existeRestaurante ? "Guardar": "Crear"%></button>
+
+TipoComida is not defined
+    at eval (eval at compile (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/ejs/lib/ejs.js:661:12), <anonymous>:122:45)
+    at crear-restaurante (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/ejs/lib/ejs.js:691:17)
+    at tryHandleCache (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/ejs/lib/ejs.js:272:36)
+    at View.exports.renderFile [as engine] (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/ejs/lib/ejs.js:489:10)
+    at View.render (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/express/lib/application.js:640:10)
+    at Function.render (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/express/lib/application.js:592:3)
+    at ServerResponse.render (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/express/lib/response.js:1012:7)
+    at RestauranteController.vistaCrear (/home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/dist/restaurante/restaurante.controller.js:49:13)
+    at /home/andres/Insync/luis.andradec14@gmail.com/Google Drive/7mo-Semestre/AplicacionesWeb/wb-andrade-cabrera-luis-andrade/03-examen/examen/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+c[[90m9:20:17 PM[0m] File change detected. Starting incremental compilation...
+

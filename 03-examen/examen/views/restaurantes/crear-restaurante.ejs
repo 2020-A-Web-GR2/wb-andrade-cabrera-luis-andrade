@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <% const existeRestaurante= typeof restaurante!= "undefined"%>
+    <title><%= existeRestaurante ? "Editar": "Crear"%> restaurante</title>
+
+    <style>
+
+    </style>
+    <%- include("../compartido/estilos-generales/estilos-generales-component.ejs") %>
+
+</head>
+<body>
+
+<!--Banderas para comprobar variables usadas luego-->
+
+<% let existeError= typeof error!= "undefined"%>
+<% let existeNombre= typeof nombre!= "undefined"%>
+<% let existeRuc= typeof ruc!= "undefined"%>
+<% let existeCategoria= typeof categoria!= "undefined"%>
+<% let existeUbicacion= typeof ubicacion!= "undefined"%>
+<% let existeTelefono= typeof telefono!= "undefined"%>
+<% let existeTipoComida= typeof tipoComida!= "undefined"%>
+
+
+<% if(existeRestaurante){ %>
+    <!--Se prefiere lo recibido por un error en consulta, si no existe se llena desde la BD-->
+    <% if(!existeNombre){nombre=restaurante.nombre}%>
+    <% if(!existeRuc){ruc=restaurante.ruc}%>
+    <% if(!existeCategoria){categoria=restaurante.categoria}%>
+    <% if(!existeUbicacion){ubicacion=restaurante.ubicacion}%>
+    <% if(!existeTelefono){telefono=restaurante.telefono}%>
+    <% if(!existeTipoComida){tipoComida=restaurante.tipoComida}%>
+
+
+    <% existeNombre = true%>
+    <% existeRuc = true%>
+    <% existeCategoria = true%>
+    <% existeUbicacion = true%>
+    <% existeTelefono = true%>
+    <% existeTipoComida = true%>
+
+<%}%>
+
+<!--Permite controlar que parte del menu de navegacion esta activo-->
+<% const activeDict = {
+    "inicio": false,
+    "crear": true
+} %>
+<!--Llama al menu de navegacion y envía el diccionario correspondiente -->
+<%- include("../compartido/nav-bar/nav-bar-component.ejs",{active:activeDict}) %>
+
+<div class="container">
+    <!--Definir si es la vista editar o crear-->
+    <h1> <%= existeRestaurante ? "Editar": "Crear"%> Restaurante</h1>
+    <% if (existeError){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= error%>
+        </div>
+    <% } %>
+    <form action=" <%= existeRestaurante ? "/restaurante/editarDesdeVista/" + restaurante.id: "/restaurante/crearDesdeVista/"%>"
+          method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputRestauranteName">Nombre del Restaurante</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputRestauranteName"
+                        name="nombre"
+                        value="<%= existeNombre ? nombre: "" %>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputRestauranteRUC">RUC</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputRestauranteRUC"
+                        name="ruc"
+                        value="<%= existeRuc ? ruc: "" %>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputRestauranteCategoria">Categoría</label>
+                <select
+                        id="inputRestauranteCategoria"
+                        class="form-control"
+                        name="categoria">
+                    <option selected><%= existeCategoria ? categoria : "Seleccione..." %></option>
+                    <option>Fast Food</option>
+                    <option>Fast Casual</option>
+                    <option>Buffet</option>
+                    <option>Temáticos</option>
+                    <option>Para llevar</option>
+                    <option>De autor</option>
+                    <option>Fusión</option>
+                    <option>Alta cocina</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputRestauranteUbicacion">Ubicacion</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputRestauranteUbicacion"
+                        name="ubicacion"
+                        value="<%= existeUbicacion ? ubicacion: "" %>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputRestaurantePhone">Teléfono</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputRestaurantePhone"
+                        name="telefono"
+                        value="<%= existeTelefono ? telefono: "" %>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputRestauranteTipoComida">Tipo de Comida</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputRestauranteTipoComida"
+                        name="tipoComida"
+                        value="<%= existeTipoComida ? tipoComida: "" %>">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-secondary"><%= existeRestaurante ? "Guardar": "Crear"%></button>
+        <button type="reset" class="btn btn-light">Limpiar</button>
+    </form>
+</div>
+
+
+<%- include("../compartido/funcionalidad-general/funcionalidad-general-component.ejs") %>
+</body>
+</html>

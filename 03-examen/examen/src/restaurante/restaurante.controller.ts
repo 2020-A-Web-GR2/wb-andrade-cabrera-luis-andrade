@@ -7,7 +7,7 @@ import {
      NotFoundException, Param,
      Post,
      Query,
-     Res
+     Res, Session
 } from "@nestjs/common";
 import {RestauranteService} from "./restaurante.service";
 import {RestauranteCreateDTO} from "./dto/restaurante.create.DTO";
@@ -24,8 +24,13 @@ export class RestauranteController {
      @Get("inicio")
      async vistaInicio(
          @Query() parametrosConsulta,
-         @Res() res
+         @Res() res,
+         @Session() session
      ){
+          const estaLogueado = session.usuario;
+          if(!estaLogueado){
+               return res.redirect("/login")
+          }
           let resultadoEncontrado
           let busqueda = ""
           const existeBusqueda = typeof parametrosConsulta.busqueda!= "undefined"
@@ -39,7 +44,7 @@ export class RestauranteController {
           }
           if(resultadoEncontrado){
                res.render(
-                   "restaurante/restaurantes",
+                   "restaurantes/restaurante",
                    {
                         arregloRestaurantes: resultadoEncontrado,
                         parametrosConsulta: parametrosConsulta
@@ -53,10 +58,15 @@ export class RestauranteController {
      @Get("crear")
      vistaCrear(
          @Query() parametrosConsulta,
-         @Res() res
+         @Res() res,
+         @Session() session
      ){
+          const estaLogueado = session.usuario;
+          if(!estaLogueado){
+               return res.redirect("/login")
+          }
           res.render(
-              "restaurante/crear-restaurante",
+              "restaurantes/crear-restaurante",
               {
                    error: parametrosConsulta.error,
                    nombre: parametrosConsulta.nombre,
@@ -117,8 +127,13 @@ export class RestauranteController {
      async vistaEditar(
          @Query() parametrosConsulta,
          @Param() parametrosRuta,
-         @Res() res
+         @Res() res,
+         @Session() session
      ){
+          const estaLogueado = session.usuario;
+          if(!estaLogueado){
+               return res.redirect("/login")
+          }
           const id = Number(parametrosRuta.id);
           let restauranteEncontrado
           try{
@@ -129,10 +144,16 @@ export class RestauranteController {
           }
           if (restauranteEncontrado){
                return res.render(
-                   "restaurant/crear-restaurante",
+                   "restaurantes/crear-restaurante",
                    {
                         error: parametrosConsulta.error,
-                        restaurant: restauranteEncontrado,
+                        restaurante: restauranteEncontrado,
+                        nombre: restauranteEncontrado.nombre,
+                        ruc: restauranteEncontrado.ruc,
+                        categoria: restauranteEncontrado.categoria,
+                        ubicacion: restauranteEncontrado.ubicacion,
+                        telefono: restauranteEncontrado.telefono,
+                        tipoComida: restauranteEncontrado.tipoComida
                    }
                )
           }else{
@@ -146,7 +167,6 @@ export class RestauranteController {
          @Body() parametrosCuerpo,
          @Res() res
      ){
-          const id = Number(parametrosRuta.id);
           const restauranteValidado = new RestauranteUpdateDTO();
           restauranteValidado.nombre = parametrosCuerpo.nombre;
           restauranteValidado.categoria = parametrosCuerpo.categoria;
@@ -167,15 +187,16 @@ export class RestauranteController {
                     telefonoConsulta = `&telefono=${parametrosCuerpo.telefono}`
                     tipoComidaConsulta = `&tipoComida=${parametrosCuerpo.tipoComida}`
                     const mensajeError = "Error de validación"
-                    return res.redirect("/restaurante/editar/"+id+"?error="+mensajeError+nombreConsulta+categoriaConsulta+rucConsulta+ubicacionConsulta+telefonoConsulta+tipoComidaConsulta)
+                    return res.redirect("/restaurante/editar/"+parametrosRuta.id+"?error="+mensajeError+nombreConsulta+categoriaConsulta+rucConsulta+ubicacionConsulta+telefonoConsulta+tipoComidaConsulta)
                }else{
                     const restauranteEditado = {
-                         id: id,
+                         id: Number(parametrosRuta.id),
                          nombre: parametrosCuerpo.nombre,
                          categoria: parametrosCuerpo.categoria,
                          ruc: parametrosCuerpo.ruc,
                          ubicacion: parametrosCuerpo.ubicacion,
-                         tipoComida: parametrosCuerpo.tipoComida
+                         tipoComida: parametrosCuerpo.tipoComida,
+                         telefono: parametrosCuerpo.telefono
                     } as RestauranteEntity;
                     let respuestaEdicionRestaurante;
                     try{
@@ -185,14 +206,14 @@ export class RestauranteController {
                     }catch (error) {
                          const mensajeError = "Error editando Restaurante"
                          console.log(error)
-                         return res.redirect("/restaurante/editar/"+id+"?error=" + mensajeError)
+                         return res.redirect("/restaurante/editar/"+parametrosRuta.id+"?error=" + mensajeError)
                     }
                     return res.redirect("/restaurante/inicio")
                }
           } catch (e) {
                console.error("Error", e);
                const mensajeError = "Error editando Restaurante"
-               return res.redirect("/restaurante/editar/"+id+"?error=" + mensajeError)
+               return res.redirect("/restaurante/editar/"+parametrosRuta.id+"?error=" + mensajeError)
           }
      }
 
