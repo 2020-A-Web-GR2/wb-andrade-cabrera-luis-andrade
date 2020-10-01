@@ -225,10 +225,10 @@ export class RestauranteController {
           try{
                const id = Number(parametrosRuta.id)
                await this._restauranteService.eliminarUno(id);
-               return res.redirect("/restaurante/inicio?mensaje=Equipo eliminado")
+               return res.redirect("/restaurante/inicio?mensaje=Restaurante eliminado")
           }catch (error) {
                console.log(error);
-               return res.redirect("/restaurante/inicio?error=Error eliminando equipo")
+               return res.redirect("/restaurante/inicio?error=Error eliminando restaurante")
           }
      }
 
